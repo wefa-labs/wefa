@@ -1,21 +1,33 @@
+import {
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+  useSearchParams,
+} from "react-router-dom";
+import { useEffect } from "react";
+import { toast } from "react-toastify";
 import { a, useTransition } from "@react-spring/web";
-import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 
-import { useHome } from "../hooks/views/useHome";
+import { useApp } from "../hooks/app/useApp";
+import { useDeck } from "../hooks/views/useDeck";
 import { useExplore } from "../hooks/views/useExplore";
 import { useProfile } from "../hooks/views/useProfile";
 
-import Home from "./Home";
+import Deck from "./Deck";
+// import Play from "./Play";
 import Explore from "./Explore";
 import Profile from "./Profile";
 
+type LowerElement = "water" | "earth" | "fire" | "air";
+
 export default function Views() {
   const location = useLocation();
+  const [searchParams] = useSearchParams();
   const transitions = useTransition(location, {
     from: { opacity: 0 },
     enter: { opacity: 1 },
     leave: { opacity: 0 },
-    exitBeforeEnter: true,
     config: {
       tension: 300,
       friction: 20,
@@ -23,21 +35,40 @@ export default function Views() {
     },
   });
 
-  const home = useHome();
+  const { isDesktop, setTheme } = useApp();
+
+  const deck = useDeck();
   const explore = useExplore();
   const profile = useProfile();
 
+  useEffect(() => {
+    const element = searchParams.get("element") as LowerElement | null;
+
+    if (element) {
+      setTheme(element);
+    }
+
+    if (isDesktop) {
+      toast.info("Use on mobile for best experience.");
+    }
+  }, []);
+
   return transitions((style, location) => (
+    // <Profiler id="views" onRender={callback}>
     <a.main
-      className={`flex h-[calc(100dvh-3.5rem)] overflow-hidden max-h-[calc(100dvh-3.5rem)] overflow-y-contain`}
+      className={`flex h-[calc(100dvh-4rem)] overflow-hidden max-h-[calc(100dvh-4rem)] ${
+        isDesktop ? "" : "overflow-y-contain"
+      }`}
       style={style}
     >
       <Routes location={location}>
-        <Route path="home" element={<Home {...home} />} />
-        <Route path="explore" element={<Explore {...explore} />} />
-        <Route path="profile" element={<Profile {...profile} />} />
-        <Route path="*" element={<Navigate to="profile" />} />
+        <Route path="/deck" element={<Deck {...deck} />} />
+        {/* <Route path="/play" element={<Play />} /> */}
+        <Route path="/explore" element={<Explore {...explore} />} />
+        <Route path="/profile" element={<Profile {...profile} />} />
+        <Route path="*" element={<Navigate to="/explore" />} />
       </Routes>
     </a.main>
+    // </Profiler>
   ));
 }

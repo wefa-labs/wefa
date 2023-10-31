@@ -1,49 +1,50 @@
-import { useEffect } from "react";
-import { Toaster } from "react-hot-toast";
-import { useHuddle01 } from "@huddle01/react";
+import { WagmiConfig } from "wagmi";
+import { ErrorBoundary } from "@sentry/react";
+import { ToastContainer } from "react-toastify";
+import { BrowserRouter } from "react-router-dom";
+import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
 
-import { usePWA, InstallState } from "./hooks/providers/pwa";
+import { config, chains } from "./modules/wagmi";
+
+import { AppProvider } from "./hooks/app/useApp";
+import { WefaProvider } from "./hooks/wefa/useWefa";
+import { SeedProvider } from "./hooks/wefa/useSeed";
 
 import { Appbar } from "./components/Layout/AppBar";
-import { PWAPrompt } from "./components/Layout/PWAPrompt";
-import { OnlyMobile } from "./components/Layout/OnlyMobile";
-import { CircleLoader } from "./components/Loader/Circle";
+import { Header } from "./components/Layout/Header";
+// import { NotificationProvider } from "./components/Layout/Notifications";
 
 import Views from "./views";
 
-export function App() {
-  const { initialize } = useHuddle01();
-  const { installState, ...pwaData } = usePWA();
-
-  const Onboard: Record<InstallState, React.ReactNode> = {
-    idle: (
-      <div className="w-screen h-screen pb-20 bg-[#e9e3dd] grid place-items-center z-30 fixed top-0 left-0">
-        <CircleLoader />
-      </div>
-    ),
-    installed: null,
-    prompt:
-      installState === "unsupported" ? (
-        <PWAPrompt {...pwaData} installState={installState} />
-      ) : null,
-    unsupported: <OnlyMobile />,
-  };
-
-  useEffect(() => {
-    // its preferable to use env vars to store projectId
-    initialize(import.meta.env.VITE_HUDDLE_PROJECT_ID);
-  }, []);
-
+function App() {
   return (
-    <>
-      {Onboard[installState]}
-      {installState !== "unsupported" && (
-        <>
-          <Appbar />
-          <Views />
-        </>
-      )}
-      <Toaster />
-    </>
+    <ErrorBoundary fallback={<p>An error has occurred</p>}>
+      <WagmiConfig config={config}>
+        <RainbowKitProvider chains={chains}>
+          <AppProvider>
+            <BrowserRouter>
+              <WefaProvider>
+                <SeedProvider>
+                  <Header />
+                  <Appbar />
+                  <Views />
+                  <ToastContainer
+                    bodyClassName=""
+                    // toastClassName="max-w-xs mx-auto text-neutral bg-primary rounded-xl py-2 px-3"
+                    progressClassName=""
+                    // hideProgressBar
+                    autoClose={3000}
+                    closeButton={false}
+                    limit={4}
+                  />
+                </SeedProvider>
+              </WefaProvider>
+            </BrowserRouter>
+          </AppProvider>
+        </RainbowKitProvider>
+      </WagmiConfig>
+    </ErrorBoundary>
   );
 }
+
+export default App;

@@ -1,7 +1,9 @@
-import { Link, useLocation } from "react-router-dom";
 import { a, config, useSpring } from "@react-spring/web";
+import { Link, useLocation } from "react-router-dom";
 
-import { RC as HomeIcon } from "../../assets/icons/house.svg";
+import { useApp } from "../../hooks/app/useApp";
+
+import { RC as CardsIcon } from "../../assets/icons/cards.svg";
 import { RC as WorldIcon } from "../../assets/icons/world.svg";
 import { RC as ProfileIcon } from "../../assets/icons/profile.svg";
 
@@ -15,10 +17,15 @@ const tabs: {
   >;
 }[] = [
   {
-    path: "/synths",
-    title: "Synths",
-    Icon: HomeIcon,
+    path: "/deck",
+    title: "Deck",
+    Icon: CardsIcon,
   },
+  // {
+  //   path: "/play",
+  //   title: "Play",
+  //   Icon: CardsIcon,
+  // },
   {
     path: "/explore",
     title: "Explore",
@@ -33,6 +40,7 @@ const tabs: {
 
 export const Appbar = () => {
   const { pathname } = useLocation();
+  const { isDesktop } = useApp();
 
   const spring = useSpring({
     from: {
@@ -50,10 +58,15 @@ export const Appbar = () => {
     },
   });
 
+  {
+    /* Added a Div  to center Nav bar */
+  }
   return (
     <a.nav
       className={
-        "btm-nav z-20 bg-base-100 py-6 fixed bottom-0 rounded-t-2xl w-full"
+        isDesktop
+          ? "relative tabs w-full bg-base-100 rounded-3xl py-2 px-4 max-w-2xl flex justify-around items-center shadow-lg mx-auto mt-16 z-10"
+          : "btm-nav z-20 bg-base-100 py-4 fixed bottom-0"
       }
       style={spring}
     >
@@ -61,19 +74,23 @@ export const Appbar = () => {
         <Link to={path} key={title}>
           <button
             className={`flex flex-col items-center ${
-              pathname === path
-                ? "active tab-active fill-stone-950"
-                : "fill-stone-500"
-            }`}
+              pathname === path ? "active tab-active" : ""
+            } ${isDesktop ? "tab" : ""}}`}
           >
-            <Icon width={36} height={36} />
-            {/* <p
+            <Icon
+              width={32}
+              height={32}
+              className={`${
+                pathname === path ? "fill-primary" : "fill-neutral"
+              }`}
+            />
+            <p
               className={`text-sm tracking-wide ${
                 pathname === path ? "text-primary" : "text-neutral"
               }`}
             >
               {title}
-            </p> */}
+            </p>
           </button>
         </Link>
       ))}

@@ -1,25 +1,28 @@
-import { foundry, baseGoerli } from "wagmi/chains";
-import { configureChains, createConfig } from "wagmi";
-import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
+import { createConfig, configureChains } from "wagmi";
+import { optimismGoerli, optimism } from "wagmi/chains";
+import { publicProvider } from "wagmi/providers/public";
 import { alchemyProvider } from "wagmi/providers/alchemy";
+import { getDefaultWallets } from "@rainbow-me/rainbowkit";
 
-export const chainConfig = configureChains(
-  [baseGoerli, foundry],
+import "@rainbow-me/rainbowkit/styles.css";
+
+const { chains, publicClient } = configureChains(
+  [optimismGoerli, optimism],
   [
-    alchemyProvider({ apiKey: import.meta.env.VITE_ALCHEMY_API_KEY! }),
-    jsonRpcProvider({
-      rpc: (chain) => {
-        if (chain.id === foundry.id) {
-          return { http: "http://localhost:8545" };
-        }
-        return { http: chain.rpcUrls.default.http[0] };
-      },
-    }),
-  ],
+    alchemyProvider({ apiKey: import.meta.env.VITE_VERCEL_ALCHEMY_ID ?? "" }),
+    publicProvider(),
+  ]
 );
 
-export const config = createConfig({
-  autoConnect: true,
-  publicClient: chainConfig.publicClient,
-  webSocketPublicClient: chainConfig.webSocketPublicClient,
+const { connectors } = getDefaultWallets({
+  appName: "WEFA",
+  chains,
 });
+
+const config = createConfig({
+  autoConnect: false,
+  connectors,
+  publicClient,
+});
+
+export { chains, config };
