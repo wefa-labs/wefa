@@ -1,4 +1,4 @@
-import { mudConfig } from "@latticexyz/world/register";=
+import { mudConfig } from "@latticexyz/world/register";
 
 export default mudConfig({
   enums: {
