@@ -4,16 +4,16 @@ pragma solidity >=0.8.21;
 import {Ownable} from "openzeppelin-contracts/access/Ownable.sol";
 import {ERC721} from "openzeppelin-contracts/token/ERC721/ERC721.sol";
 
-import {NFCRegistry} from "./NFC.sol";
+// import {NFCRegistry} from "./NFC.sol";
 import {TBALib} from "../lib/TBA.sol";
-import {PlantAccount} from "../account/Plant.sol";
+import {PlantAccount} from "../accounts/Plant.sol";
 
 error NotPlant();
 error NotPlantOwner();
 error NotPlantOwner();
 error NFCNotRegistered();
 
-contract PlantRegistry is ERC721, Ownable {
+contract PlantToken is ERC721, Ownable {
     uint256 private _nextTokenId;
     address private _plantAccountImplementation;
     address private _nfcRegistry;
@@ -42,9 +42,9 @@ contract PlantRegistry is ERC721, Ownable {
             revert NotPlantOwner();
         }
 
-        if (NFCRegistry(_nfcRegistry).nfcIdToIssuer(nfcId) == address(0)) {
-            revert NFCNotRegistered();
-        }
+        // if (NFCRegistry(_nfcRegistry).nfcIdToIssuer(nfcId) == address(0)) {
+        //     revert NFCNotRegistered();
+        // }
 
         uint256 tokenId = _nextTokenId++;
         _safeMint(house, tokenId);

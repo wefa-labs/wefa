@@ -3,9 +3,9 @@ pragma solidity >=0.8.21;
 
 import {AccountV3} from "tokenbound/AccountV3.sol";
 
-error NotHolderOwner();
+error NotKeeperOwner();
 
-contract HolderAccount is AccountV3 {
+contract KeeperAccount is AccountV3 {
     constructor(
         address erc4337EntryPoint,
         address multicallForwarder,
@@ -16,33 +16,33 @@ contract HolderAccount is AccountV3 {
 
     function updateName(string memory name) external returns () {
         if (_isValidSigner(msg.sender) == false) {
-            revert NotHolderOwner();
+            revert NotKeeperOwner();
         }
 
-        HolderTable(_houseTable).updateName(name);
+        KeeperTable(_houseTable).updateName(name);
     }
 
     function updateDescription(string memory description) external returns () {
         if (_isValidSigner(msg.sender) == false) {
-            revert NotHolderOwner();
+            revert NotKeeperOwner();
         }
 
-        HolderTable(_houseTable).updateDescription(description);
+        KeeperTable(_houseTable).updateDescription(description);
     }
 
     function updateStyle(uint style) external returns () {
         if (_isValidSigner(msg.sender) == false) {
-            revert NotHolderOwner();
+            revert NotKeeperOwner();
         }
 
-        HolderTable(_houseTable).updateStyle(style);
+        KeeperTable(_houseTable).updateStyle(style);
     }
 
     function updateImage(string memory image) external returns () {
         if (_isValidSigner(msg.sender) == false) {
-            revert NotHolderOwner();
+            revert NotKeeperOwner();
         }
 
-        HolderTable(_houseTable).updateImage(image);
+        KeeperTable(_houseTable).updateImage(image);
     }
 }

@@ -4,16 +4,16 @@ pragma solidity >=0.8.21;
 import {Ownable} from "openzeppelin-contracts/access/Ownable.sol";
 import {ERC721} from "openzeppelin-contracts/token/ERC721/ERC721.sol";
 
-import {NFCRegistry} from "./NFC.sol";
+// import {NFCRegistry} from "./NFC.sol";
 import {TBALib} from "../lib/TBA.sol";
-import {SpaceAccount} from "../account/Space.sol";
+import {SpaceAccount} from "../accounts/Space.sol";
 
 error NotSpace();
 error NotSpaceOwner();
 error NotSpaceOwner();
 error NFCNotRegistered();
 
-contract SpaceRegistry is ERC721, Ownable {
+contract SpaceToken is ERC721, Ownable {
     uint256 private _nextTokenId;
     address private _spaceAccountImplementation;
     address private _nfcRegistry;
@@ -42,9 +42,9 @@ contract SpaceRegistry is ERC721, Ownable {
             revert NotSpaceOwner();
         }
 
-        if (NFCRegistry(_nfcRegistry).nfcIdToIssuer(nfcId) == address(0)) {
-            revert NFCNotRegistered();
-        }
+        // if (NFCRegistry(_nfcRegistry).nfcIdToIssuer(nfcId) == address(0)) {
+        //     revert NFCNotRegistered();
+        // }
 
         uint256 tokenId = _nextTokenId++;
         _safeMint(house, tokenId);

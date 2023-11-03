@@ -4,16 +4,16 @@ pragma solidity >=0.8.21;
 import {Ownable} from "openzeppelin-contracts/access/Ownable.sol";
 import {ERC721} from "openzeppelin-contracts/token/ERC721/ERC721.sol";
 
-import {NFCRegistry} from "./NFC.sol";
+// import {NFCRegistry} from "./NFC.sol";
 import {TBALib} from "../lib/TBA.sol";
-import {HolderAccount} from "../account/Holder.sol";
+import {KeeperAccount} from "../accounts/Keeper.sol";
 
-error NotHolder();
-error NotHolderOwner();
-error NotHolderOwner();
+error NotKeeper();
+error NotKeeperOwner();
+error NotKeeperOwner();
 error NFCNotRegistered();
 
-contract HolderRegistry is ERC721, Ownable {
+contract KeeperToken is ERC721, Ownable {
     uint256 private _nextTokenId;
     address private _holderAccountImplementation;
     address private _nfcRegistry;
@@ -30,7 +30,7 @@ contract HolderRegistry is ERC721, Ownable {
         _nfcRegistry = nfcRegistry;
     }
 
-    function registerHolder(
+    function registerKeeper(
         address house,
         string memory nfcId,
         string memory name,
@@ -38,32 +38,32 @@ contract HolderRegistry is ERC721, Ownable {
         string memory image,
         uint style
     ) external {
-        if (HolderAccount(house).owner() != msg.sender) {
-            revert NotHolderOwner();
+        if (KeeperAccount(house).owner() != msg.sender) {
+            revert NotKeeperOwner();
         }
 
-        if (NFCRegistry(_nfcRegistry).nfcIdToIssuer(nfcId) == address(0)) {
-            revert NFCNotRegistered();
-        }
+        // if (NFCRegistry(_nfcRegistry).nfcIdToIssuer(nfcId) == address(0)) {
+        //     revert NFCNotRegistered();
+        // }
 
         uint256 tokenId = _nextTokenId++;
         _safeMint(house, tokenId);
 
         address holderAccount = TBALib.createAccount(_holderAccountImplementation, address(this), tokenId);
 
-        HolderAccount(holderAccount).initialize(nfcId);
+        KeeperAccount(holderAccount).initialize(nfcId);
 
-        HolderTable(_holderTable).insert(holderAccount, house, nfcId, name, description, image, style);
+        KeeperTable(_holderTable).insert(holderAccount, house, nfcId, name, description, image, style);
     }
 
-    function transferHolder(address oldHolder, address newHolder, uint256 tokenId) public {
-        require(HolderAccount(oldHolder), NotHolder());
-        require(HolderAccount(newHolder), NotHolder());
+    function transferKeeper(address oldKeeper, address newKeeper, uint256 tokenId) public {
+        require(KeeperAccount(oldKeeper), NotKeeper());
+        require(KeeperAccount(newKeeper), NotKeeper());
 
         if (msg.sender != _goodTransferResolver) {
             revert NotAuthorized();
         }
 
-        transferFrom(oldHolder, newHolder, tokenId);
+        transferFrom(oldKeeper, newKeeper, tokenId);
     }
 }

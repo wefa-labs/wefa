@@ -4,16 +4,16 @@ pragma solidity >=0.8.21;
 import {Ownable} from "openzeppelin-contracts/access/Ownable.sol";
 import {ERC721} from "openzeppelin-contracts/token/ERC721/ERC721.sol";
 
-import {NFCRegistry} from "./NFC.sol";
+// import {NFCRegistry} from "./NFC.sol";
 import {TBALib} from "../lib/TBA.sol";
-import {CreatureAccount} from "../account/Creature.sol";
+import {CreatureAccount} from "../accounts/Creature.sol";
 
 error NotCreature();
 error NotCreatureOwner();
 error NotCreatureOwner();
 error NFCNotRegistered();
 
-contract CreatureRegistry is ERC721, Ownable {
+contract CreatureToken is ERC721, Ownable {
     uint256 private _nextTokenId;
     address private _creatureAccountImplementation;
     address private _nfcRegistry;

@@ -3,13 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "keywords": [
-    "web3",
-    "starter",
-    "kit",
     "dapp",
     "ethereum",
     "solidity",
-    "hardhat",
     "react",
     "next",
     "typescript",
@@ -18,18 +14,6 @@
     "lattice",
     "latticexyz"
   ],
-  "workspaces": {
-    "packages": [
-      "packages/*",
-      "packages/clients/*"
-    ],
-    "nohoist": [
-      "**/@openzeppelin/contracts",
-      "**/@openzeppelin/contracts/**",
-      "**/@openzeppelin/contracts-upgradeable",
-      "**/@openzeppelin/contracts-upgradeable/**"
-    ]
-  },
   "scripts": {
     "foundry:up": "curl -L https://foundry.paradigm.xyz | bash && bash $HOME/.foundry/bin/foundryup",
     "mud:up": "pnpm mud set-version --tag main && pnpm install",
@@ -53,7 +37,7 @@
     "viem": "^1.10.9"
   },
   "devDependencies": {
-    "@latticexyz/cli": "2.0.0-next.9",
+    "@latticexyz/cli": "2.0.0-next.12",
     "@typescript-eslint/eslint-plugin": "^6.7.4",
     "@typescript-eslint/parser": "^6.7.4",
     "concurrently": "8.2.1",

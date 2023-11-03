@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "@ethereum-attestation-service/eas-contracts": "1.0.0-beta.0",
+    "@iden3/contracts": "1.1.0",
     "@latticexyz/cli": "2.0.0-next.12",
     "@latticexyz/schema-type": "2.0.0-next.12",
     "@latticexyz/store": "2.0.0-next.12",
@@ -37,7 +38,7 @@
     "solc": "0.8.21",
     "solhint": "^3.3.7",
     "solidity-coverage": "^0.8.5",
-    "solhint-config-mud": "2.0.0-next.9",
-    "solhint-plugin-mud": "2.0.0-next.9"
+    "solhint-config-mud": "2.0.0-next.12",
+    "solhint-plugin-mud": "2.0.0-next.12"
   }
 }
