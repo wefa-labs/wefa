@@ -24,7 +24,7 @@
     "@latticexyz/store": "2.0.0-next.12",
     "@latticexyz/world": "2.0.0-next.12",
     "@latticexyz/world-modules": "2.0.0-next.12",
-    "@openzeppelin/contracts": "4.8.3"
+    "@openzeppelin/contracts": "4.9.3"
   },
   "devDependencies": {
     "@types/react": "^18.0.9",
