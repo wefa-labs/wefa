@@ -11,6 +11,8 @@ import { Element, ElementTableId } from "./tables/Element.sol";
 import { Cell, CellData, CellTableId } from "./tables/Cell.sol";
 import { Grid, GridData, GridTableId } from "./tables/Grid.sol";
 import { Map, MapData, MapTableId } from "./tables/Map.sol";
+import { Match, MatchData, MatchTableId } from "./tables/Match.sol";
+import { Player, PlayerTableId } from "./tables/Player.sol";
 import { Asset, AssetData, AssetTableId } from "./tables/Asset.sol";
 import { Identity, IdentityData, IdentityTableId } from "./tables/Identity.sol";
 import { Owner, OwnerTableId } from "./tables/Owner.sol";

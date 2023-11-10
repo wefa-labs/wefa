@@ -1,48 +1,68 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.8.21;
+pragma solidity >=0.8.18;
 
-import {AccountV3} from "tokenbound/AccountV3.sol";
+import { AccountV3Upgradable } from "tokenbound/AccountV3Upgradable.sol";
+import { Initializable } from "openzeppelin-contracts/proxy/utils/Initializable.sol";
+
+import { KeeperAccount } from "./Keeper.sol";
+import { AccountTypeEnum } from "../codegen/common.sol";
 
 error NotSpaceOwner();
 
-contract SpaceAccount is AccountV3 {
+contract SpaceAccount is AccountV3Upgradable, Initializable {
+    AccountTypeEnum constant ACCOUNT_TYPE = AccountTypeEnum.Space;
+    address private _world;
+
     constructor(
+        address world,
         address erc4337EntryPoint,
         address multicallForwarder,
         address erc6551Registry,
         address guardian
-    ) AccountV3(erc4337EntryPoint, multicallForwarder, erc6551Registry, guardian) {
+    ) AccountV3Upgradable(erc4337EntryPoint, multicallForwarder, erc6551Registry, guardian) {
+        _world = world;
     }
 
-    function updateName(string memory name) external returns () {
-        if (_isValidSigner(msg.sender) == false) {
+    function initialize() external initializer {
+    }
+
+    function updateName(string memory name) external {
+        if (_isValidSigner(msg.sender, "")) {
             revert NotSpaceOwner();
         }
 
-        SpaceTable(_houseTable).updateName(name);
+        // SpaceTable(_houseTable).updateName(name);
     }
 
-    function updateDescription(string memory description) external returns () {
-        if (_isValidSigner(msg.sender) == false) {
+    function updateDescription(string memory description) external {
+        if (_isValidSigner(msg.sender, "")) {
             revert NotSpaceOwner();
         }
 
-        SpaceTable(_houseTable).updateDescription(description);
+        // SpaceTable(_houseTable).updateDescription(description);
     }
 
-    function updateStyle(uint style) external returns () {
-        if (_isValidSigner(msg.sender) == false) {
+    function updateImage(string memory image) external {
+        if (_isValidSigner(msg.sender, "")) {
             revert NotSpaceOwner();
         }
 
-        SpaceTable(_houseTable).updateStyle(style);
+        // SpaceTable(_houseTable).updateImage(image);
     }
 
-    function updateImage(string memory image) external returns () {
-        if (_isValidSigner(msg.sender) == false) {
+    function inviteKeepers(address[] memory keeper) external {
+        if (_isValidSigner(msg.sender, "")) {
             revert NotSpaceOwner();
         }
 
-        SpaceTable(_houseTable).updateImage(image);
+        // SpaceTable(_houseTable).addKeeper(keeper);
+    }
+
+    function joinSpace(address keeper) external {
+        if (_isValidSigner(msg.sender, "")) {
+            revert NotSpaceOwner();
+        }
+
+        // SpaceTable(_houseTable).addKeeper(keeper);
     }
 }

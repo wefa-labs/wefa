@@ -2,13 +2,20 @@
 pragma solidity >=0.8.18;
 
 import { System } from "@latticexyz/world/src/System.sol";
-// import { getUniqueEntity } from "@latticexyz/world/src/modules/uniqueentity/getUniqueEntity.sol";
+import { getUniqueEntity } from "@latticexyz/world-modules/src/modules/uniqueentity/getUniqueEntity.sol";
 
-// import { RoleEnum } from "../codegen/Types.sol";
-import { IWorld } from "../codegen/world/IWorld.sol";
-// import {Game, GameData, Match, MatchData, Role } from "../codegen/Tables.sol";
+import { Owner } from "../codegen/tables/Owner.sol";
+import { Map, MapData } from "../codegen/tables/Map.sol";
+import { Asset, AssetData } from "../codegen/tables/Asset.sol";
+import { Identity, IdentityData } from "../codegen/tables/Identity.sol";
 
-contract GameMoveSystem is System {
+import { CellSystem } from "./CellSystem.sol";
+import { GridSystem } from "./GridSystem.sol";
+import { GameCollectibleSystem } from "./GameCollectibleSystem.sol";
+
+import { GamesLib } from "../lib/Games.sol";
+
+contract GameMoveSystem is GameCollectibleSystem, GridSystem, CellSystem {
   function claimPosition(
     bytes32 gameId,
     uint8 matchNumber,
@@ -55,32 +62,5 @@ contract GameMoveSystem is System {
 
     // Match.set(gameId, matchNumber, matchData);
     // Game.set(gameId, gameData);
-  }
-
-  function checkWin(uint8[] memory board) private pure returns (bool) {
-    // Check rows
-    for (uint8 row = 0; row < 3; row++) {
-        if (board[row * 3] != 0 && board[row * 3] == board[row * 3 + 1] && board[row * 3] == board[row * 3 + 2]) {
-            return true;
-        }
-    }
-
-    // Check columns
-    for (uint8 col = 0; col < 3; col++) {
-        if (board[col] != 0 && board[col] == board[col + 3] && board[col] == board[col + 6]) {
-            return true;
-        }
-    }
-
-    // Check diagonals
-    if (board[0] != 0 && board[0] == board[4] && board[0] == board[8]) {
-        return true;
-    }
-
-    if (board[2] != 0 && board[2] == board[4] && board[2] == board[6]) {
-        return true;
-    }
-
-    return false;
   }
 }

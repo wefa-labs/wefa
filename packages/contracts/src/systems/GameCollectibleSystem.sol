@@ -2,13 +2,15 @@
 pragma solidity >=0.8.18;
 
 import { System } from "@latticexyz/world/src/System.sol";
-// import { getUniqueEntity } from "@latticexyz/world/src/modules/uniqueentity/getUniqueEntity.sol";
 
-// import { RoleEnum } from "../codegen/Types.sol";
-// import { Identity, Match, MatchData, Role } from "../codegen/Tables.sol";
+import { Owner } from "../codegen/tables/Owner.sol";
+import { Token, TokenData } from "../codegen/tables/Token.sol";
+import { Asset, AssetData } from "../codegen/tables/Asset.sol";
 
-contract GameCollectibleSystem is System {
-  function claimGameTrophy(
+import { TokenSystem } from "./TokenSystem.sol";
+
+contract GameCollectibleSystem is TokenSystem {
+  function claimTrophy(
     bytes32 matchId
   ) public returns (string memory meta) {
     address user = _msgSender();

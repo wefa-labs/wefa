@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.21;
+pragma solidity ^0.8.19;
 
 import {TOKENBOUND_REGISTRY} from "../Constants.sol";
 import {IERC6551Registry} from "../interfaces/IERC6551Registry.sol";

@@ -2,13 +2,17 @@
 pragma solidity >=0.8.18;
 
 import { System } from "@latticexyz/world/src/System.sol";
-// import { getUniqueEntity } from "@latticexyz/world/src/modules/uniqueentity/getUniqueEntity.sol";
+import { getUniqueEntity } from "@latticexyz/world-modules/src/modules/uniqueentity/getUniqueEntity.sol";
 
-// import { RoleEnum } from "../codegen/Types.sol";
-import { IWorld } from "../codegen/world/IWorld.sol";
-// import { ARWorld, Identity, IdentityData, Game, GameData, Match, MatchData, Role, Owner } from "../codegen/Tables.sol";
+import { Owner } from "../codegen/tables/Owner.sol";
+import { Token, TokenData } from "../codegen/tables/Token.sol";
+import { Asset, AssetData } from "../codegen/tables/Asset.sol";
+import { Identity, IdentityData } from "../codegen/tables/Identity.sol";
 
-contract GameStartSystem is System {
+import { CellSystem } from "./CellSystem.sol";
+import { GridSystem } from "./GridSystem.sol";
+
+contract GameStartSystem is GridSystem, CellSystem {
   function createGame(
     // RoleEnum role,
     string memory name,

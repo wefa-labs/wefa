@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.8.21;
+pragma solidity >=0.8.18;
 
 import "forge-std/Test.sol";
 import { MudTest } from "@latticexyz/world/test/MudTest.t.sol";

@@ -1,48 +1,108 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.8.21;
+pragma solidity >=0.8.18;
 
-import {AccountV3} from "tokenbound/AccountV3.sol";
+import { AccountV3Upgradable } from "tokenbound/AccountV3Upgradable.sol";
+import { Initializable } from "openzeppelin-contracts/proxy/utils/Initializable.sol";
+
+import { AccountTypeEnum } from "../codegen/common.sol";
 
 error NotKeeperOwner();
 
-contract KeeperAccount is AccountV3 {
+contract KeeperAccount is AccountV3Upgradable, Initializable {
+    AccountTypeEnum constant ACCOUNT_TYPE = AccountTypeEnum.Keeper;
+    address private _world;
+
     constructor(
+        address world,
         address erc4337EntryPoint,
         address multicallForwarder,
         address erc6551Registry,
         address guardian
-    ) AccountV3(erc4337EntryPoint, multicallForwarder, erc6551Registry, guardian) {
+    ) AccountV3Upgradable(erc4337EntryPoint, multicallForwarder, erc6551Registry, guardian) {
+        _world = world;
     }
 
-    function updateName(string memory name) external returns () {
-        if (_isValidSigner(msg.sender) == false) {
+    function initialize() external initializer {
+    }
+
+    function updateName(string memory name) external {
+        if (_isValidSigner(msg.sender, "")) {
             revert NotKeeperOwner();
         }
 
-        KeeperTable(_houseTable).updateName(name);
+        // KeeperTable(_houseTable).updateName(name);
     }
 
-    function updateDescription(string memory description) external returns () {
-        if (_isValidSigner(msg.sender) == false) {
+    function updateDescription(string memory description) external {
+        if (_isValidSigner(msg.sender, "")) {
             revert NotKeeperOwner();
         }
 
-        KeeperTable(_houseTable).updateDescription(description);
+        // KeeperTable(_houseTable).updateDescription(description);
     }
 
-    function updateStyle(uint style) external returns () {
-        if (_isValidSigner(msg.sender) == false) {
+    function seedPlant(bytes32 plantId) external {
+        if (_isValidSigner(msg.sender, "")) {
             revert NotKeeperOwner();
         }
 
-        KeeperTable(_houseTable).updateStyle(style);
+        // SpaceTable(_houseTable).updateImage(image);
     }
 
-    function updateImage(string memory image) external returns () {
-        if (_isValidSigner(msg.sender) == false) {
+    function seedCreature(bytes32 creatureId) external {
+        if (_isValidSigner(msg.sender, "")) {
             revert NotKeeperOwner();
         }
 
-        KeeperTable(_houseTable).updateImage(image);
+        // SpaceTable(_houseTable).updateImage(image);
+    }
+
+    function nurturePlant(bytes32 plantId) external {
+        if (_isValidSigner(msg.sender, "")) {
+            revert NotKeeperOwner();
+        }
+
+        // KeeperTable(_houseTable).updateImage(image);
+    }
+
+    function nurtureCreature(bytes32 creatureId) external {
+        if (_isValidSigner(msg.sender, "")) {
+            revert NotKeeperOwner();
+        }
+
+        // KeeperTable(_houseTable).updateImage(image);
+    }
+
+    function evolveCreature(bytes32 creatureId) external {
+        if (_isValidSigner(msg.sender, "")) {
+            revert NotKeeperOwner();
+        }
+
+        // KeeperTable(_houseTable).updateImage(image);
+    }
+
+
+    function startGame(address game) external {
+        if (_isValidSigner(msg.sender, "")) {
+            revert NotKeeperOwner();
+        }
+
+        // KeeperTable(_houseTable).updateImage(image);
+    }
+
+    function joinGame(address game) external {
+        if (_isValidSigner(msg.sender, "")) {
+            revert NotKeeperOwner();
+        }
+
+        // KeeperTable(_houseTable).updateImage(image);
+    }
+
+    function makeGameMove(address game) external {
+        if (_isValidSigner(msg.sender, "")) {
+            revert NotKeeperOwner();
+        }
+
+        // KeeperTable(_houseTable).updateImage(image);
     }
 }

@@ -7,6 +7,9 @@ export default mudConfig({
     CellTypeEnum: ["Empty", "Plant", "Creature"],
     GridTypeEnum: ["TicTacToe", "Checkers", "Ludo", "Chess"],
     MapTypeEnum: ["Private", "Public"],
+    SizeEnum: ["Small", "Medium", "Large", "Massive"],
+    TransferStatusEnum: ["Pending", "Completed", "Failed"],
+    AccountTypeEnum: ["Keeper", "Space", "Plant", "Creature"],
   },
   tables: {
     // WEFA
@@ -29,7 +32,7 @@ export default mudConfig({
     Cell: {
       valueSchema: {
         position: "int32",
-        type: "CellTypeEnum",
+        cellType: "CellTypeEnum",
         entity: "address",
       },
     },
@@ -37,13 +40,27 @@ export default mudConfig({
       valueSchema: {
         x: "int32",
         y: "int32",
-        type: "GridTypeEnum",
+        gridType: "GridTypeEnum",
       },
     },
     Map: {
       valueSchema: {
         gridCount: "int32",
-        type: "MapTypeEnum",
+        mapType: "MapTypeEnum",
+      },
+    },
+    // GAMES
+    Match: {
+      valueSchema: {
+        winner: "bytes32",
+        turn: "bytes32",
+        game: "GridTypeEnum",
+        players: "bytes32[]",
+      },
+    },
+    Player: {
+      valueSchema: {
+        name: "string",
       },
     },
     // GENERAL
@@ -56,6 +73,7 @@ export default mudConfig({
     Identity: {
       valueSchema: {
         createdAt: "uint256",
+        name: "string",
         metadata: "string",
       },
     },
@@ -66,7 +84,7 @@ export default mudConfig({
     Token: {
       valueSchema: {
         id: "uint256",
-        contract: "address",
+        addrs: "address",
         account: "address",
       },
     },
@@ -173,6 +191,11 @@ export default mudConfig({
   modules: [
     {
       name: "UniqueEntityModule",
+      root: true,
+      args: [],
+    },
+    {
+      name: "KeysWithValueModule",
       root: true,
       args: [],
     },

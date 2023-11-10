@@ -8,13 +8,13 @@ pragma solidity >=0.8.21;
  * @dev This interface is automatically generated from the corresponding system contract. Do not edit manually.
  */
 interface ICreatureSystem {
-  function redeem(
+  function redeemCreature(
     string memory image,
     string memory meta,
     int32 longitude,
     int32 latitude,
     address spaceAddrs
-  ) external returns (bytes32);
+  ) external;
 
-  function nurture(bytes32 _entity, int32 _energy) external returns (bytes memory);
+  function nurtureCreature(bytes32 _entity, int32 _energy) external;
 }

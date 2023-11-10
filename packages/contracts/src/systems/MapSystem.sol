@@ -1,18 +1,24 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.8.21;
+pragma solidity >=0.8.18;
 
 import { System } from "@latticexyz/world/src/System.sol";
-// import { getUniqueEntity } from "@latticexyz/world/src/modules/uniqueentity/getUniqueEntity.sol";
 
-// import { SizeEnum, StateEnum } from "../codegen/Types.sol";
-// import { Map, MapData, Identity, IdentityData, Size, State, Owner, Space, SpaceData } from "../codegen/Tables.sol";
+import { MapTypeEnum, SizeEnum } from "../codegen/common.sol";
 
-contract MapSystem is System {
+import { Owner } from "../codegen/tables/Owner.sol";
+import { Map, MapData } from "../codegen/tables/Map.sol";
+import { Asset, AssetData } from "../codegen/tables/Asset.sol";
+import { Identity, IdentityData } from "../codegen/tables/Identity.sol";
+
+import { GridSystem } from "./GridSystem.sol";
+
+contract MapSystem is GridSystem {
   function createMap(
-    string memory name,
-    string memory description,
-    string memory image
-    // SizeEnum size
+    bytes32 spaceId,
+    string memory metadata,
+    string memory image,
+    SizeEnum size,
+    MapTypeEnum mapType
   ) public returns (bytes32) {
     address owner = _msgSender();
     // bytes32 worldId = getUniqueEntity();
@@ -33,8 +39,8 @@ contract MapSystem is System {
     return bytes32(0);
   }
 
-    function claimSpace(
-    bytes32 worldId
+    function claimGrid(
+    bytes32 mapId
   ) public returns (bytes32) {
     address client = _msgSender();
 

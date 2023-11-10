@@ -33,3 +33,23 @@ enum MapTypeEnum {
   Private,
   Public
 }
+
+enum SizeEnum {
+  Small,
+  Medium,
+  Large,
+  Massive
+}
+
+enum TransferStatusEnum {
+  Pending,
+  Completed,
+  Failed
+}
+
+enum AccountTypeEnum {
+  Keeper,
+  Space,
+  Plant,
+  Creature
+}

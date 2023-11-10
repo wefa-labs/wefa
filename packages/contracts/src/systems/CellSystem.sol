@@ -2,30 +2,37 @@
 pragma solidity >=0.8.18;
 
 import { System } from "@latticexyz/world/src/System.sol";
+import { getUniqueEntity } from "@latticexyz/world-modules/src/modules/uniqueentity/getUniqueEntity.sol";
 
-// import { StateEnum } from "../codegen/Types.sol";
-// import { ARWorld, Space, SpaceData, Cell, State, Size, Owner } from "../codegen/Tables.sol";
+import { CellTypeEnum } from "../codegen/common.sol";
+import { Grid, GridData, Cell, CellData, Owner } from "../codegen/index.sol";
+
+import { PlantAccount } from "../accounts/Plant.sol";
+import { KeeperAccount } from "../accounts/Keeper.sol";
+import { CreatureAccount } from "../accounts/Creature.sol";
 
 contract CellSystem is System {
-  function setCell(
-    bytes32 worldId,
-    bytes32 spaceId,
-    // uint32 x,
-    // uint32 y,
-    uint8 position,
-    bytes32 value
-  ) public {
-    address client = _msgSender();
-
-    // require(x < 81, "x out of range");
-    // require(y < 81, "y out of range");
-    require(position < 81, "position out of range");
-    // require(ARWorld.get(worldId).id == worldId, "world not found");
-    // require(State.get(worldId) == StateEnum.Active, "world not active");
-    // require(Space.get(worldId, spaceId).id == spaceId, "space not found");
-    // require(Owner.get(spaceId) == client, "not space owner");
-    // require(State.get(spaceId) == StateEnum.Active, "space not active");
+  function createCell(
+    bytes32 gridId,
+    int32 position,
+    CellTypeEnum cellType,
+    address entity 
+  ) external {
+    GridData memory gridData = Grid.get(gridId);
     
-    // Cell.set(worldId, spaceId, position, value);    
+    bytes32 cellId = getUniqueEntity();
+
+    Owner.set(cellId, gridId);
+    Cell.set(cellId, position, cellType, entity);
+  }
+  
+  function setCell(
+    bytes32 cellId,
+    CellTypeEnum cellType,
+    int32 position,
+    address value
+  ) public {
+    address gridId = Owner.get(cellId);
+    CellData memory cellData = Cell.get(cellId);
   }
 }

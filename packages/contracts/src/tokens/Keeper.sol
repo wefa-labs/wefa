@@ -1,36 +1,39 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.8.21;
+pragma solidity >=0.8.18;
 
 import {Ownable} from "openzeppelin-contracts/access/Ownable.sol";
 import {ERC721} from "openzeppelin-contracts/token/ERC721/ERC721.sol";
+import { ERC721URIStorage } from "openzeppelin-contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 
-// import {NFCRegistry} from "./NFC.sol";
 import {TBALib} from "../lib/TBA.sol";
 import {KeeperAccount} from "../accounts/Keeper.sol";
 
 error NotKeeper();
 error NotKeeperOwner();
-error NotKeeperOwner();
 error NFCNotRegistered();
+error NotAuthorized();
 
 contract KeeperToken is ERC721, Ownable {
     uint256 private _nextTokenId;
-    address private _holderAccountImplementation;
+    address private _world;
+    address private _keeperAccountImplementation;
     address private _nfcRegistry;
     address private _goodTransferResolver;
 
     constructor(
-        address holderAccountImplementation,
+        address world,
+        address keeperAccountImplementation,
         address nfcRegistry,
         address goodTransferResolver,
         string memory _name
-    ) ERC721(_name, "ART") {
-        _holderAccountImplementation = holderAccountImplementation;
+    ) ERC721("WEFA Keeper", "KEEPER") {
+        _world = world;
+        _keeperAccountImplementation = keeperAccountImplementation;
         _goodTransferResolver = goodTransferResolver;
         _nfcRegistry = nfcRegistry;
     }
 
-    function registerKeeper(
+    function mintKeeper(
         address house,
         string memory nfcId,
         string memory name,
@@ -38,7 +41,7 @@ contract KeeperToken is ERC721, Ownable {
         string memory image,
         uint style
     ) external {
-        if (KeeperAccount(house).owner() != msg.sender) {
+        if (KeeperAccount(payable(house)).owner() != msg.sender) {
             revert NotKeeperOwner();
         }
 
@@ -49,21 +52,18 @@ contract KeeperToken is ERC721, Ownable {
         uint256 tokenId = _nextTokenId++;
         _safeMint(house, tokenId);
 
-        address holderAccount = TBALib.createAccount(_holderAccountImplementation, address(this), tokenId);
+        address keeperAccount = TBALib.createAccount(_keeperAccountImplementation, address(this), tokenId);
 
-        KeeperAccount(holderAccount).initialize(nfcId);
-
-        KeeperTable(_holderTable).insert(holderAccount, house, nfcId, name, description, image, style);
+        // KeeperTable(_keeperTable).insert(keeperAccount, house, nfcId, name, description, image, style);
     }
 
-    function transferKeeper(address oldKeeper, address newKeeper, uint256 tokenId) public {
-        require(KeeperAccount(oldKeeper), NotKeeper());
-        require(KeeperAccount(newKeeper), NotKeeper());
-
-        if (msg.sender != _goodTransferResolver) {
-            revert NotAuthorized();
-        }
-
-        transferFrom(oldKeeper, newKeeper, tokenId);
+    function _beforeTokenTransfer(
+        address from, 
+        address to, 
+        uint256 tokenId,
+        uint256 batchSize
+    ) internal override virtual {
+        require(from == address(0), "Err: token transfer is BLOCKED");   
+        super._beforeTokenTransfer(from, to, tokenId, batchSize);  
     }
 }

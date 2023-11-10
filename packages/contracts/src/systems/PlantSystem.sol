@@ -1,26 +1,19 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.8.21;
+pragma solidity >=0.8.18;
 
 import {System} from "@latticexyz/world/src/System.sol";
+
+import { TokenSystem } from "./TokenSystem.sol";
+
 // import { getUniqueEntity } from "@latticexyz/world/src/modules/uniqueentity/getUniqueEntity.sol";
 
 // Compoonents - Write
-// import {IdentityTable, IdentityTableData} from "../codegen/tables/IdentityTable.sol";
-// import {TokenIDTable} from "../codegen/tables/TokenIDTable.sol";
-// import {AssetTable, AssetTableData} from "../codegen/tables/AssetTable.sol";
-// import {HealthTable, HealthTableData} from "../codegen/tables/HealthTable.sol";
-// import {CareTable, CareTableData} from "../codegen/tables/CareTable.sol";
-// import {CoordinateTable, CoordinateTableData} from "../codegen/tables/CoordinateTable.sol";
-// import {ElementTable} from "../codegen/tables/ElementTable.sol";
-// import {OwnedByTable} from "../codegen/tables/OwnedByTable.sol";
-// import {HomeTable} from "../codegen/tables/HomeTable.sol";
 
 // import {HealthStatus, GrowthLevel} from "../codegen/Types.sol";
-// import {addressToEntityKey} from "../addressToEntityKey.sol";
 // import {ISpace} from "../interfaces/ISpace.sol";
 
-contract PlantSystem is System {
-    function redeem(
+contract PlantSystem is TokenSystem {
+    function redeemPlant(
         string memory image,
         string memory meta,
         int32 long,
@@ -52,4 +45,29 @@ contract PlantSystem is System {
 
         return bytes32(0);
     }
+
+    function reportPlant() public {
+
+    }
+
+    function nurturePlant() public {
+
+    }
+
+    function _beforeProofSubmit(
+        uint64, /* requestId */
+        uint256[] memory inputs,
+        ICircuitValidator validator
+    ) internal view override {
+        // check that  challenge input is address of sender
+        address addr = GenesisUtils.int256ToAddress(
+            inputs[validator.getChallengeInputIndex()]
+        );
+        // this is linking between msg.sender and
+        require(
+            _msgSender() == addr,
+            "address in proof is not a sender address"
+        );
+    }
+
 }

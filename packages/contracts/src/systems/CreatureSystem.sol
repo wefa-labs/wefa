@@ -1,35 +1,24 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.0;
 
-import {System} from "@latticexyz/world/src/System.sol";
-// import { getUniqueEntity } from "@latticexyz/world/src/modules/uniqueentity/getUniqueEntity.sol";
+import { System } from "@latticexyz/world/src/System.sol";
+import { getUniqueEntity } from "@latticexyz/world-modules/src/modules/uniqueentity/getUniqueEntity.sol";
 
-// Compoonents - Write
-// import {IdentityTable, IdentityTableData} from "../codegen/tables/IdentityTable.sol";
-// import {TokenIDTable} from "../codegen/tables/TokenIDTable.sol";
-// import {AssetTable, AssetTableData} from "../codegen/tables/AssetTable.sol";
-// import {EnergyTable} from "../codegen/tables/EnergyTable.sol";
-// import {HealthTable, HealthTableData} from "../codegen/tables/HealthTable.sol";
-// import {CareTable, CareTableData} from "../codegen/tables/CareTable.sol";
-// import {CoordinateTable, CoordinateTableData} from "../codegen/tables/CoordinateTable.sol";
-// import {ElementTable} from "../codegen/tables/ElementTable.sol";
-// import {OwnedByTable} from "../codegen/tables/OwnedByTable.sol";
-// import {HomeTable} from "../codegen/tables/HomeTable.sol";
+import { Owner } from "../codegen/tables/Owner.sol";
+import { Asset, AssetData } from "../codegen/tables/Asset.sol";
+import { Identity, IdentityData } from "../codegen/tables/Identity.sol";
 
-import {ISpace} from "../interfaces/ISpace.sol";
-// import {HealthStatus, GrowthLevel} from "../codegen/Types.sol";
-// import {addressToEntityKey} from "../addressToEntityKey.sol";
+import { TokenSystem } from "./TokenSystem.sol";
 
-contract CreatureSystem is System {
-    function redeem(string memory image, string memory meta, int32 longitude, int32 latitude, address spaceAddrs)
+contract CreatureSystem is TokenSystem {
+    function redeemCreature(string memory image, string memory meta, int32 longitude, int32 latitude, address spaceAddrs)
         public
-        returns (bytes32)
     {
-        address userAddrs = _msgSender();
-        bytes32 player = addressToEntityKey(userAddrs);
+        // address userAddrs = _msgSender();
+        // bytes32 player = addressToEntityKey(userAddrs);
 
-        bool isMember = ISpace(spaceAddrs).isMember(userAddrs);
-        require(isMember, "not member of space");
+        // bool isMember = ISpace(spaceAddrs).isMember(userAddrs);
+        // require(isMember, "not member of space");
 
         // Check that proof is valid - Proof Verifies Zone, Plant, Image, Location, Health, Growth and Effect
         // require(verifyProof(plantId, spaceAddrs, longitude, latitude, commitment, proofData), "Invalid Proof");
@@ -50,10 +39,10 @@ contract CreatureSystem is System {
         // OwnedByTable.set(player, msg.sender);
         // HomeTable.set(player, spaceAddrs);
 
-        return player;
+        // return player;
     }
 
-    function nurture(bytes32 _entity, int32 _energy) public returns (bytes memory) {
+    function nurtureCreature(bytes32 _entity, int32 _energy) public {
         // address spaceAddrs = HomeTable.get(_entity);
         // bool isMember = ISpace(spaceAddrs).isMember(msg.sender);
         // require(isMember, "not space member");
@@ -95,6 +84,39 @@ contract CreatureSystem is System {
         // HealthTable.set(_entity, health);
         // CareTable.set(_entity, care);
 
-        return abi.encode(healthValue, energyCost);
+        // return abi.encode(healthValue, energyCost);
+    }
+
+    function evolveCreature(bytes32 _entity, string memory _image, string memory _meta) public {
+        // address spaceAddrs = HomeTable.get(_entity);
+        // bool isMember = ISpace(spaceAddrs).isMember(msg.sender);
+        // require(isMember, "not space member");
+        // require(OwnedByTable.get(_entity) == msg.sender, "not creature trainer");
+
+        // HealthTableData memory health = HealthTable.get(_entity);
+        // CareTableData memory care = CareTable.get(_entity);
+
+        // require(health.status != HealthStatus.DEAD, "creature dead");
+        // require(care.checkedAt + 1 days < block.timestamp, "creature fed");
+
+        // int32 energyCost = 10;
+        // int32 healthValue = 10;
+
+        // health.current = health.current + healthValue;
+        // care.checkedAt = block.timestamp;
+
+        // if (health.current > 69) {
+        //     health.status = HealthStatus.HEALTHY;
+        // } else if (health.current > 0) {
+        //     health.status = HealthStatus.SICK;
+        // } else {
+        //     health.status = HealthStatus.DEAD;
+        // }
+
+        // EnergyTable.set(spaceId, spaceEnergy - energyCost);
+        // HealthTable.set(_entity, health);
+        // CareTable.set(_entity, care);
+
+        // return abi.encode(healthValue, energyCost);
     }
 }
