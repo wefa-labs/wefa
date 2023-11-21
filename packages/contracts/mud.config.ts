@@ -5,7 +5,7 @@ export default mudConfig({
     ElementEnum: ["Water", "Earth", "Fire", "Air"],
     GrowthLevelEnum: ["Seed", "Sprout", "Flowering", "Mature"],
     CellTypeEnum: ["Empty", "Plant", "Creature"],
-    GridTypeEnum: ["TicTacToe", "Checkers", "Ludo", "Chess"],
+    GridTypeEnum: ["TicTacToe", "Checkers", "Ludo", "Chess"], // TODO: New Games Scrabble, Candyland, Catan, Life, Connect Four, Checkers, Mancala
     MapTypeEnum: ["Private", "Public"],
     SizeEnum: ["Small", "Medium", "Large", "Massive"],
     TransferStatusEnum: ["Pending", "Completed", "Failed"],
@@ -88,27 +88,6 @@ export default mudConfig({
         account: "address",
       },
     },
-    // LOCATION
-    Coordinate: {
-      valueSchema: {
-        x: "int32",
-        y: "int32",
-        z: "int32",
-      },
-    },
-    Tag: {
-      valueSchema: {
-        issuer: "address",
-        did: "string",
-      },
-    },
-    // SPACE
-    Home: {
-      valueSchema: "address",
-    },
-    Members: {
-      valueSchema: "bytes32[]",
-    },
     // PLANT & CREATURE
     Health: {
       valueSchema: {
@@ -146,14 +125,6 @@ export default mudConfig({
       name: "Creature",
       openAccess: true,
     },
-    PlantSystem: {
-      name: "Plant",
-      openAccess: true,
-    },
-    SpaceSystem: {
-      name: "Space",
-      openAccess: true,
-    },
     GameStartSystem: {
       name: "GameStart",
       openAccess: true,
@@ -162,15 +133,10 @@ export default mudConfig({
       name: "GameMove",
       openAccess: true,
     },
-    GameCollectibleSystem: {
-      name: "GameCollectible",
-      openAccess: false,
-      accessList: ["GameMoveSystem"],
-    },
     MapSystem: {
       name: "Map",
       openAccess: false,
-      accessList: ["SpaceSystem"],
+      accessList: ["GameStartSystem"],
     },
     GridSystem: {
       name: "Grid",
@@ -185,7 +151,7 @@ export default mudConfig({
     TokenSystem: {
       name: "Token",
       openAccess: false,
-      accessList: ["SpaceSystem", "PlantSystem", "CreatureSystem", "GameCollectibleSystem"],
+      accessList: ["CreatureSystem"],
     },
   },
   modules: [

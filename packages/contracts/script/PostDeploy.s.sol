@@ -5,23 +5,14 @@ import { Script } from "forge-std/Script.sol";
 import { console } from "forge-std/console.sol";
 import { Create2 } from "openzeppelin-contracts/utils/Create2.sol";
 
-import { TOKENBOUND_REGISTRY } from "../src/Constants.sol";
 import { IWorld } from "../src/codegen/world/IWorld.sol";
+import { TOKENBOUND_REGISTRY } from "../src/Constants.sol";
 
-import { NFCRegistry } from "../src/registries/NFC.sol";
-
-import { SpaceToken } from "../src/tokens/Space.sol";
-import { PlantToken } from "../src/tokens/Plant.sol";
 import { KeeperToken } from "../src/tokens/Keeper.sol";
 import { CreatureToken } from "../src/tokens/Creature.sol";
 
-import { SpaceAccount } from "../src/accounts/Space.sol";
-import { PlantAccount } from "../src/accounts/Plant.sol";
 import { KeeperAccount } from "../src/accounts/Keeper.sol";
 import { CreatureAccount } from "../src/accounts/Creature.sol";
-
-import { PlantCareResolver } from "../src/resolvers/PlantCare.sol";
-import { GoodTransferResolver } from "../src/resolvers/GoodTransfer.sol";
 
 contract PostDeploy is Script {
   function run(address worldAddress) external {
@@ -49,27 +40,6 @@ contract PostDeploy is Script {
     //     factory
     // );
 
-    // address spaceImplementation = Create2.computeAddress(
-    //     salt,
-    //     keccak256(
-    //         abi.encodePacked(
-    //             type(SpaceAccount).creationCode,
-    //             abi.encode(worldAddress, erc4337EntryPoint, multicallForwarder, TOKENBOUND_REGISTRY, guardian)
-    //         )
-    //     ),
-    //     factory
-    // );
-
-    // address plantImplementation = Create2.computeAddress(
-    //     salt,
-    //     keccak256(
-    //         abi.encodePacked(
-    //             type(PlantAccount).creationCode,
-    //             abi.encode(worldAddress , erc4337EntryPoint, multicallForwarder, TOKENBOUND_REGISTRY, guardian)
-    //         )
-    //     ),
-    //     factory
-    // );
 
     // address creatureImplementation = Create2.computeAddress(
     //     salt,
@@ -88,63 +58,18 @@ contract PostDeploy is Script {
     //     factory
     // );
 
-    // address spaceProxy = Create2.computeAddress(
-    //     salt,
-    //     keccak256(abi.encodePacked(type(AccountProxy).creationCode, abi.encode(guardian, spaceImplementation))),
-    //     factory
-    // );
-
-    // address plantProxy = Create2.computeAddress(
-    //     salt,
-    //     keccak256(abi.encodePacked(type(AccountProxy).creationCode, abi.encode(guardian, plantImplementation))),
-    //     factory
-    // );
-
     // address creatureProxy = Create2.computeAddress(
     //     salt,
     //     keccak256(abi.encodePacked(type(AccountProxy).creationCode, abi.encode(guardian, creatureImplementation))),
     //     factory
     // );
 
-    // address goodTransferResolver = Create2.computeAddress(
-    //     salt,
-    //     keccak256(abi.encodePacked(type(GoodTransferResolver).creationCode, abi.encode(EAS_OP))),
-    //     factory
-    // );
-
-    // address plantCareResolver = Create2.computeAddress(
-    //     salt,
-    //     keccak256(abi.encodePacked(type(PlantCareResolver).creationCode, abi.encode(EAS_OP))),
-    //     factory
-    // );
-
-    // address nfcRegistry = Create2.computeAddress(
-    //     salt,
-    //     keccak256(abi.encodePacked(type(NFCRegistry).creationCode, abi.encode())),
-    //     factory
-    // );
 
     // address keeperToken = Create2.computeAddress(
     //     salt,
     //     keccak256(
     //         abi.encodePacked(
     //             type(KeeperToken).creationCode, abi.encode(worldAddress, keeperImplementation, nfcRegistry)
-    //         )
-    //     ),
-    //     factory
-    // );
-
-    // address spaceToken = Create2.computeAddress(
-    //     salt,
-    //     keccak256(abi.encodePacked(type(SpaceToken).creationCode, abi.encode(worldAddress, spaceImplementation))),
-    //     factory
-    // );
-
-    // address plantToken = Create2.computeAddress(
-    //     salt,
-    //     keccak256(
-    //         abi.encodePacked(
-    //             type(PlantToken).creationCode, abi.encode(worldAddress, plantImplementation, nfcRegistry)
     //         )
     //     ),
     //     factory
@@ -190,38 +115,6 @@ contract PostDeploy is Script {
     //     console.log("KeeperAccount:", keeperImplementation, "(exists)");
     // }
 
-    // // Deploy Space Account Implementation
-    // if (spaceImplementation.code.length == 0) {
-    //     vm.startBroadcast(deployerPrivateKey);
-    //     new SpaceAccount{salt: salt}(
-    //         erc4337EntryPoint,
-    //         multicallForwarder,
-    //         TOKENBOUND_REGISTRY,
-    //         guardian
-    //     );
-    //     vm.stopBroadcast();
-
-    //     console.log("SpaceAccount:", spaceImplementation, "(deployed)");
-    // } else {
-    //     console.log("SpaceAccount:", spaceImplementation, "(exists)");
-    // }
-
-    // // Deploy Plant Account Implementation
-    // if (plantImplementation.code.length == 0) {
-    //     vm.startBroadcast(deployerPrivateKey);
-    //     new PlantAccount{salt: salt}(
-    //         erc4337EntryPoint,
-    //         multicallForwarder,
-    //         TOKENBOUND_REGISTRY,
-    //         guardian
-    //     );
-    //     vm.stopBroadcast();
-
-    //     console.log("PlantAccount:", plantImplementation, "(deployed)");
-    // } else {
-    //     console.log("PlantAccount:", plantImplementation, "(exists)");
-    // }
-
     // // Deploy Creature Account Implementation
     // if (creatureImplementation.code.length == 0) {
     //     vm.startBroadcast(deployerPrivateKey);
@@ -249,28 +142,6 @@ contract PostDeploy is Script {
     //     console.log("KeeperAccount:", keeperProxy, "(exists)");
     // }
 
-    // // Deploy Space Account Proxy
-    // if (spaceProxy.code.length == 0) {
-    //     vm.startBroadcast(deployerPrivateKey);
-    //     new SpaceAccount{salt: salt}(guardian, spaceImplementation);
-    //     vm.stopBroadcast();
-
-    //     console.log("SpaceAccount:", spaceProxy, "(deployed)");
-    // } else {
-    //     console.log("SpaceAccount:", spaceProxy, "(exists)");
-    // }
-
-    // // Deploy Plant Account Proxy
-    // if (plantProxy.code.length == 0) {
-    //     vm.stplantBroadcast(deployerPrivateKey);
-    //     new PlantAccount{salt: salt}(guardian, plantImplementation);
-    //     vm.stopBroadcast();
-
-    //     console.log("PlantAccount:", plantProxy, "(deployed)");
-    // } else {
-    //     console.log("PlantAccount:", plantProxy, "(exists)");
-    // }
-
     // // Deploy Creature Account Proxy
     // if (creatureProxy.code.length == 0) {
     //     vm.startBroadcast(deployerPrivateKey);
@@ -282,39 +153,6 @@ contract PostDeploy is Script {
     //     console.log("CreatureAccount:", creatureProxy, "(exists)");
     // }
 
-    // // Deploy Good Transfer Resolver
-    // if (goodTransferResolver.code.length == 0) {
-    //     vm.startBroadcast(deployerPrivateKey);
-    //     new GoodTransferResolver{salt: salt}(EAS_OP);
-    //     vm.stopBroadcast();
-
-    //     console.log("GoodTransferResolver:", goodTransferResolver, "(deployed)");
-    // } else {
-    //     console.log("GoodTransferResolver:", goodTransferResolver, "(exists)");
-    // }
-
-    // // Deploy Plant Care Resolver
-    // if (plantCareResolver.code.length == 0) {
-    //     vm.startBroadcast(deployerPrivateKey);
-    //     new GoodTransferResolver{salt: salt}(EAS_OP);
-    //     vm.stopBroadcast();
-
-    //     console.log("GoodTransferResolver:", plantCareResolver, "(deployed)");
-    // } else {
-    //     console.log("GoodTransferResolver:", plantCareResolver, "(exists)");
-    // }
-
-    // // Deploy NFC Registry
-    // if (nfcRegistry.code.length == 0) {
-    //     vm.startBroadcast(deployerPrivateKey);
-    //     new NFCRegistry{salt: salt}();
-    //     vm.stopBroadcast();
-
-    //     console.log("NFCRegistry:", nfcRegistry, "(deployed)");
-    // } else {
-    //     console.log("NFCRegistry:", nfcRegistry, "(exists)");
-    // }
-
     // // Deploy Keeper Token
     // if (keeperToken.code.length == 0) {
     //     vm.startBroadcast(deployerPrivateKey);
@@ -324,34 +162,6 @@ contract PostDeploy is Script {
     //     console.log("KeeperToken:", keeperToken, "(deployed)");
     // } else {
     //     console.log("KeeperToken:", keeperToken, "(exists)");
-    // }
-
-    // // Deploy Space Token
-    // if (spaceToken.code.length == 0) {
-    //     vm.startBroadcast(deployerPrivateKey);
-    //     new SpaceToken{salt: salt}( worldAddress, spaceImplementation );
-    //     vm.stopBroadcast();
-
-    //     console.log("SpaceToken:", spaceToken, "(deployed)");
-    // } else {
-    //     console.log("SpaceToken:", spaceToken, "(exists)");
-    // }
-
-    // // Deploy Plant Token
-    // if (plantToken.code.length == 0) {
-    //     vm.startBroadcast(deployerPrivateKey);
-    //     new PlantToken{salt: salt}( 
-    //        worldAddress,
-    //        plantImplementation,
-    //        plantCareResolver,
-    //        goodTransferResolver,
-    //        nfcRegistry
-    //     );
-    //     vm.stopBroadcast();
-
-    //     console.log("PlantToken:", plantToken, "(deployed)");
-    // } else {
-    //     console.log("PlantToken:", plantToken, "(exists)");
     // }
 
     // // Deploy Creature Token

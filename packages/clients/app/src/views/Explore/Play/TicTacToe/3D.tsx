@@ -1,10 +1,9 @@
 import { Canvas } from "@react-three/fiber";
 import { ARButton, XR } from "@react-three/xr";
 
-import { GameBoard } from "../../../components/Game/Board";
-import { TicTacToeDataProps } from "../../../hooks/games/useTicTacToe";
+// import Board from "../../../components/Game/Board";
 
-export const TicTacToe3D: React.FC<TicTacToeDataProps> = ({}) => {
+export const TicTacToe3D: React.FC = () => {
   return (
     <>
       <ARButton />
@@ -15,12 +14,10 @@ export const TicTacToe3D: React.FC<TicTacToeDataProps> = ({}) => {
           top: 0,
           left: 0,
           width: "100%",
-          height: "80dvh",
+          height: "100%",
         }}
       >
-        <XR>
-          <GameBoard userData={{ gameID: "123" }} position={[0, 0, -1]} />
-        </XR>
+        <XR>{/* <Board position={[0, 0, -1]}></Board> */}</XR>
       </Canvas>
     </>
   );

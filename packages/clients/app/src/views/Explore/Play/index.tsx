@@ -1,15 +1,24 @@
-import { useEffect } from "react";
-import { useXR } from "@react-three/xr";
 import { a, useTransition } from "@react-spring/web";
 
-import { PlayDataProps } from "../../hooks/views/usePlay";
+import { PlayDataProps, usePlay } from "../../../hooks/views/usePlay";
 
 import { Counter } from "./Counter";
 import { TicTacToeGame } from "./TicTacToe";
 
 interface PlayProps extends PlayDataProps {}
 
-const Play: React.FC<PlayProps> = ({ view }) => {
+const Play: React.FC<PlayProps> = () => {
+  const {
+    view,
+    // checkerGames,
+    // tictactoeGames,
+    // setView,
+    // createCheckersGame,
+    // createTicTacToeMatch,
+    // joinCheckersGame,
+    // joinTicTacToeMatch,
+  } = usePlay();
+
   const transitions = useTransition(view, {
     from: { opacity: 0 },
     enter: { opacity: 1 },
@@ -20,21 +29,12 @@ const Play: React.FC<PlayProps> = ({ view }) => {
       clamp: true,
     },
   });
-  const { session } = useXR();
-
-  useEffect(() => {
-    return () => {
-      session?.end();
-    };
-  }, [session]);
 
   return transitions((style, item) => (
     <a.main className="" style={style}>
       {item === "games" && <div>Games</div>}
       {item === "counter" && <Counter />}
-      {item === "tic-tac-toe" && (
-        <TicTacToeGame gameMode="3D" user="0x" gameId="" />
-      )}
+      {item === "tic-tac-toe" && <TicTacToeGame gameMode="2D" />}
     </a.main>
   ));
 };
