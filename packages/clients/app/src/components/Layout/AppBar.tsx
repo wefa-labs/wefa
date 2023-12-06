@@ -3,9 +3,9 @@ import { Link, useLocation } from "react-router-dom";
 
 import { useApp } from "../../hooks/app/useApp";
 
-import { RC as CardsIcon } from "../../assets/icons/cards.svg";
-import { RC as WorldIcon } from "../../assets/icons/world.svg";
-import { RC as ProfileIcon } from "../../assets/icons/profile.svg";
+import CardsIcon from "../../assets/icons/cards.svg?react";
+import WorldIcon from "../../assets/icons/world.svg?react";
+import ProfileIcon from "../../assets/icons/profile.svg?react";
 
 const tabs: {
   path: string;

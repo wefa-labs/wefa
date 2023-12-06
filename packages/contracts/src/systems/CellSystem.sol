@@ -7,7 +7,6 @@ import { getUniqueEntity } from "@latticexyz/world-modules/src/modules/uniqueent
 import { CellTypeEnum } from "../codegen/common.sol";
 import { Grid, GridData, Cell, CellData, Owner } from "../codegen/index.sol";
 
-import { PlantAccount } from "../accounts/Plant.sol";
 import { KeeperAccount } from "../accounts/Keeper.sol";
 import { CreatureAccount } from "../accounts/Creature.sol";
 
@@ -32,7 +31,7 @@ contract CellSystem is System {
     int32 position,
     address value
   ) public {
-    address gridId = Owner.get(cellId);
+    bytes32 gridId = Owner.get(cellId);
     CellData memory cellData = Cell.get(cellId);
   }
 }

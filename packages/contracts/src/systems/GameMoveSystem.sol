@@ -11,11 +11,10 @@ import { Identity, IdentityData } from "../codegen/tables/Identity.sol";
 
 import { CellSystem } from "./CellSystem.sol";
 import { GridSystem } from "./GridSystem.sol";
-import { GameCollectibleSystem } from "./GameCollectibleSystem.sol";
 
 import { GamesLib } from "../lib/Games.sol";
 
-contract GameMoveSystem is GameCollectibleSystem, GridSystem, CellSystem {
+contract GameMoveSystem is GridSystem, CellSystem {
   function claimPosition(
     bytes32 gameId,
     uint8 matchNumber,

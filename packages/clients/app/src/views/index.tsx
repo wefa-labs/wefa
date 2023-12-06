@@ -11,6 +11,7 @@ import { a, useTransition } from "@react-spring/web";
 
 import { useApp } from "../hooks/app/useApp";
 import { useDeck } from "../hooks/views/useDeck";
+import { usePlay } from "../hooks/views/usePlay";
 import { useExplore } from "../hooks/views/useExplore";
 import { useProfile } from "../hooks/views/useProfile";
 
@@ -18,7 +19,6 @@ import Deck from "./Deck";
 import Play from "./Play";
 import Explore from "./Explore";
 import Profile from "./Profile";
-import { usePlay } from "../hooks/views/usePlay";
 
 type LowerElement = "water" | "earth" | "fire" | "air";
 

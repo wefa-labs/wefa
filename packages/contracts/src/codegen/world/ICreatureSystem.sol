@@ -17,4 +17,6 @@ interface ICreatureSystem {
   ) external;
 
   function nurtureCreature(bytes32 _entity, int32 _energy) external;
+
+  function evolveCreature(bytes32 _entity, string memory _image, string memory _meta) external;
 }

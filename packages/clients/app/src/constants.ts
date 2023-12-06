@@ -1,8 +1,8 @@
 // Icons
-import { RC as WaterIcon } from "./assets/icons/water.svg";
-import { RC as EarthIcon } from "./assets/icons/earth.svg";
-import { RC as FireIcon } from "./assets/icons/fire.svg";
-import { RC as AirIcon } from "./assets/icons/air.svg";
+import WaterIcon from "./assets/icons/water.svg?react";
+import EarthIcon from "./assets/icons/earth.svg?react";
+import FireIcon from "./assets/icons/fire.svg?react";
+import AirIcon from "./assets/icons/fire.svg?react";
 
 // Badges
 import EarlyAdopterBadge from "./assets/badges/early-adopter-100.png";

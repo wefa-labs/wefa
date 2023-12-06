@@ -1,7 +1,7 @@
 import React from "react";
 
-import { RC as EditIcon } from "../assets/icons/cards.svg";
-import { RC as CloseIcon } from "../assets/icons/world.svg";
+import EditIcon from "../assets/icons/cards.svg?react";
+import CloseIcon from "../assets/icons/world.svg?react";
 
 interface TextProps {
   text: string;

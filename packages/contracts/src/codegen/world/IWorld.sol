@@ -7,14 +7,12 @@ import { IBaseWorld } from "@latticexyz/world/src/codegen/interfaces/IBaseWorld.
 
 import { ICellSystem } from "./ICellSystem.sol";
 import { ICreatureSystem } from "./ICreatureSystem.sol";
-import { IGameCollectibleSystem } from "./IGameCollectibleSystem.sol";
 import { IGameMoveSystem } from "./IGameMoveSystem.sol";
 import { IGameStartSystem } from "./IGameStartSystem.sol";
 import { IGridSystem } from "./IGridSystem.sol";
 import { IIncrementSystem } from "./IIncrementSystem.sol";
+import { IKeeperSystem } from "./IKeeperSystem.sol";
 import { IMapSystem } from "./IMapSystem.sol";
-import { IPlantSystem } from "./IPlantSystem.sol";
-import { ISpaceSystem } from "./ISpaceSystem.sol";
 import { ITokenSystem } from "./ITokenSystem.sol";
 
 /**
@@ -27,14 +25,12 @@ interface IWorld is
   IBaseWorld,
   ICellSystem,
   ICreatureSystem,
-  IGameCollectibleSystem,
   IGameMoveSystem,
   IGameStartSystem,
   IGridSystem,
   IIncrementSystem,
+  IKeeperSystem,
   IMapSystem,
-  IPlantSystem,
-  ISpaceSystem,
   ITokenSystem
 {
 

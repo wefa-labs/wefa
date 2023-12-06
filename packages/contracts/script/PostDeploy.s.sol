@@ -4,6 +4,7 @@ pragma solidity >=0.8.18;
 import { Script } from "forge-std/Script.sol";
 import { console } from "forge-std/console.sol";
 import { Create2 } from "openzeppelin-contracts/utils/Create2.sol";
+import { AccountGuardian } from "tokenbound/AccountGuardian.sol";
 
 import { IWorld } from "../src/codegen/world/IWorld.sol";
 import { TOKENBOUND_REGISTRY } from "../src/Constants.sol";
@@ -16,18 +17,18 @@ import { CreatureAccount } from "../src/accounts/Creature.sol";
 
 contract PostDeploy is Script {
   function run(address worldAddress) external {
-    bytes32 salt = 0x655165516551655165516551655165516551655165516551655165516557;
-    address factory = 0x4e59b44847b379578588920cA78FbF26c0B4956C;
+    // bytes32 salt = 0x655165516551655165516551655165516551655165516551655165516557;
+    // address factory = 0x4e59b44847b379578588920cA78FbF26c0B4956C;
 
-    address wefaSafe = 0x3F35aC99149fD564f9a3f5eC78d146aeE1db7387;
-    address erc4337EntryPoint = 0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789;
-    address multicallForwarder = 0xcA1167915584462449EE5b4Ea51c37fE81eCDCCD;
-      
-    address guardian = Create2.computeAddress(
-        salt,
-        keccak256(abi.encodePacked(type(AccountGuardian).creationCode, abi.encode(wefaSafe))),
-        factory
-    );
+    // address wefaSafe = 0x3F35aC99149fD564f9a3f5eC78d146aeE1db7387;
+    // address erc4337EntryPoint = 0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789;
+    // address multicallForwarder = 0xcA1167915584462449EE5b4Ea51c37fE81eCDCCD;
+
+    // address guardian = Create2.computeAddress(
+    //     salt,
+    //     keccak256(abi.encodePacked(type(AccountGuardian).creationCode, abi.encode(wefaSafe))),
+    //     factory
+    // );
 
     // address keeperImplementation = Create2.computeAddress(
     //     salt,
@@ -39,7 +40,6 @@ contract PostDeploy is Script {
     //     ),
     //     factory
     // );
-
 
     // address creatureImplementation = Create2.computeAddress(
     //     salt,
@@ -63,7 +63,6 @@ contract PostDeploy is Script {
     //     keccak256(abi.encodePacked(type(AccountProxy).creationCode, abi.encode(guardian, creatureImplementation))),
     //     factory
     // );
-
 
     // address keeperToken = Create2.computeAddress(
     //     salt,
@@ -180,8 +179,6 @@ contract PostDeploy is Script {
     // Call increment on the world via the registered function selector
     uint32 newValue = IWorld(worldAddress).increment();
     console.log("Increment via IWorld:", newValue);
-
-    IBaseWorld world = IBaseWorld(worldAddress);
 
     vm.stopBroadcast();
   }

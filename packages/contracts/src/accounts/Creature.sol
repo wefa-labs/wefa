@@ -4,10 +4,7 @@ pragma solidity >=0.8.18;
 import { AccountV3Upgradable } from "tokenbound/AccountV3Upgradable.sol";
 import { Initializable } from "openzeppelin-contracts/proxy/utils/Initializable.sol";
 
-import { EASLib } from "../lib/EAS.sol";
-
 import { KeeperAccount } from "./Keeper.sol";
-import { NFCRegistry } from "../registries/NFC.sol";
 import { AccountTypeEnum } from "../codegen/common.sol";
 
 error NotCreatureOwner();
@@ -24,7 +21,6 @@ contract CreatureAccount is AccountV3Upgradable, Initializable {
     AccountTypeEnum constant ACCOUNT_TYPE = AccountTypeEnum.Creature;
     address private _world;
     address private _goodTransferResolver;
-    address private _nfcRegistry;
     string public nfcId;
 
     address private _buyer;
@@ -34,7 +30,6 @@ contract CreatureAccount is AccountV3Upgradable, Initializable {
     constructor(
         address world,
         address goodTransferResolver,
-        address nfcRegistry,
         address erc4337EntryPoint,
         address multicallForwarder,
         address erc6551Registry,
@@ -42,7 +37,6 @@ contract CreatureAccount is AccountV3Upgradable, Initializable {
     ) AccountV3Upgradable(erc4337EntryPoint, multicallForwarder, erc6551Registry, guardian) {
         _world = world;
         _goodTransferResolver = goodTransferResolver;
-        _nfcRegistry = nfcRegistry;
     }
 
     function initialize(string memory _nfcId) external initializer {

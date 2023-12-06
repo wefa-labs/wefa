@@ -7,7 +7,6 @@ import { SeedProvider } from "./hooks/wefa/useSeed";
 
 import { Appbar } from "./components/Layout/AppBar";
 import { Header } from "./components/Layout/Header";
-// import { NotificationProvider } from "./components/Layout/Notifications";
 
 import Views from "./views";
 

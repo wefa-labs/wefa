@@ -1,6 +1,7 @@
 /// <reference types="vite/client" />
 /// <reference types="vitest" />
 
+import dotenv from "dotenv";
 import { defineConfig } from "vite";
 import svgr from "vite-plugin-svgr";
 import mkcert from "vite-plugin-mkcert";
@@ -8,15 +9,12 @@ import { VitePWA } from "vite-plugin-pwa";
 import react from "@vitejs/plugin-react-swc";
 import { sentryVitePlugin } from "@sentry/vite-plugin";
 
+dotenv.config();
+
 export default defineConfig({
   plugins: [
-    //@ts-ignore
+    svgr(),
     mkcert(),
-    svgr({
-      svgrOptions: {
-        namedExport: "RC",
-      },
-    }),
     react(),
     VitePWA({
       includeAssets: [
@@ -103,11 +101,11 @@ export default defineConfig({
       project: "app",
       // Auth tokens can be obtained from https://sentry.io/settings/account/api/auth-tokens/
       // and need `project:releases` and `org:read` scopes
-      authToken: import.meta.env.SENTRY_AUTH_TOKEN,
+      authToken: process.env.SENTRY_AUTH_TOKEN,
     }),
   ],
   server: {
-    port: 3000,
+    port: 3001,
     fs: {
       strict: false,
     },

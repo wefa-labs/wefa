@@ -6,7 +6,6 @@ import { ERC721 } from "openzeppelin-contracts/token/ERC721/ERC721.sol";
 import { ERC721URIStorage } from "openzeppelin-contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 
 import { TBALib } from "../lib/TBA.sol";
-import  {NFCRegistry } from "../registries/NFC.sol";
 import { CreatureAccount } from "../accounts/Creature.sol";
 
 import { IWorld } from "../codegen/world/IWorld.sol";
@@ -47,11 +46,7 @@ contract CreatureToken is ERC721, Ownable {
         if (CreatureAccount(payable(house)).owner() != msg.sender) {
             revert NotCreatureOwner();
         }
-
-        // if (NFCRegistry(_nfcRegistry).nfcIdToIssuer(nfcId) == address(0)) {
-        //     revert NFCNotRegistered();
-        // }
-
+        
         uint256 tokenId = _nextTokenId++;
         _safeMint(house, tokenId);
 

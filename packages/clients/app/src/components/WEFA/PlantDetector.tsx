@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import imageCompression from "browser-image-compression";
 
-import { RC as PlantIcon } from "../../assets/icons/plant.svg";
+import PlantIcon from "../../assets/icons/plant.svg?react";
 import { useApp } from "../../hooks/app/useApp";
 
 import { PlantInfo } from "./PlantInfo";

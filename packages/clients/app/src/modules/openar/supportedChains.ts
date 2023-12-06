@@ -1,7 +1,11 @@
-import { MUDChain, latticeTestnet } from "@latticexyz/common/chains";
-import { foundry } from "@wagmi/chains";
+import {
+  MUDChain,
+  mudFoundry,
+  latticeTestnet,
+} from "@latticexyz/common/chains";
+import { baseGoerli, optimismGoerli, polygonMumbai } from "@wagmi/chains";
 
 // If you are deploying to chains other than anvil or Lattice testnet, add them here
 export const supportedChains: MUDChain[] = import.meta.env.DEV
-  ? [foundry, latticeTestnet]
-  : [latticeTestnet];
+  ? [mudFoundry, optimismGoerli, baseGoerli, polygonMumbai, latticeTestnet]
+  : [optimismGoerli, baseGoerli, polygonMumbai, latticeTestnet];
